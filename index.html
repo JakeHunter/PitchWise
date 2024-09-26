@@ -1,13 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PitchWise</titled
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PitchWise - Startup Idea Feedback Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        form {
+            margin-top: 40px;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://via.placeholder.com/200x100?text=PitchWise+Logo" alt="PitchWise Logo" class="logo">
+        <h1>PitchWise</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>About PitchWise</h2>
+            <p>PitchWise is a revolutionary platform that allows entrepreneurs to submit their startup ideas for feedback, ratings, and validation from a community of peers, experts, and investors. Our goal is to help refine ideas, identify potential issues, and connect founders with valuable resources and collaborators.</p>
+        </section>
+
+        <section>
+            <h2>Take Our Survey</h2>
+            <p>We value your input! Help us improve PitchWise by taking our short survey.</p>
+            <a href="#" class="cta-button">Take the Survey</a>
+        </section>
+
+        <section>
+            <h2>Stay Connected</h2>
+            <p>Interested in updates about PitchWise? Leave your contact information below:</p>
+            <form action="#" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <input type="submit" value="Subscribe">
+            </form>
+        </section>
+    </main>
+</body>
 </html>
