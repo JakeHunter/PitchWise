@@ -5,57 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PitchWise - Startup Idea Feedback Platform</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
         header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 0;
             text-align: center;
-            margin-bottom: 40px;
         }
         h1 {
-            color: #2c3e50;
+            color: var(--primary-color);
+            margin-bottom: 0;
         }
         .logo {
-            max-width: 200px;
+            max-width: 150px;
             height: auto;
+            margin-bottom: 10px;
+        }
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
         }
         .cta-button {
             display: inline-block;
-            background-color: #3498db;
+            background-color: var(--secondary-color);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-decoration: none;
             border-radius: 5px;
             margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #27ae60;
         }
         form {
-            margin-top: 40px;
+            margin-top: 20px;
         }
         label, input {
             display: block;
             margin-bottom: 10px;
         }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
         input[type="submit"] {
-            background-color: #2ecc71;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
     <header>
-        <img src="src/assets/Pitchwise.jpeg" alt="PitchWise Logo" class="logo">
-        <h1>PitchWise</h1>
+        <div class="container">
+            <img src="src/assets/Pitchwise.jpeg" alt="PitchWise Logo" class="logo">
+            <h1>PitchWise</h1>
+        </div>
     </header>
 
-    <main>
+    <main class="container">
         <section>
             <h2>About PitchWise</h2>
             <p>PitchWise is a revolutionary platform that allows entrepreneurs to submit their startup ideas for feedback, ratings, and validation from a community of peers, experts, and investors. Our goal is to help refine ideas, identify potential issues, and connect founders with valuable resources and collaborators.</p>
