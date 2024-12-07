@@ -5,71 +5,42 @@ import { Item } from "../types";
 import Navbar from "./Navbar";
 import SideInfo from "./SideInfo";
 import PostIdeaModal from "./PostIdeaModal";
+import FeedbackModal from "./FeedbackModal";
 
-// Your data description remains the same
 const Feed: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Item | null>(null);
   const [isPostIdeaModalOpen, setPostIdeaModalOpen] = useState(false);
+  const [isFeedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [ideaList, setIdeaList] = useState<
+    { title: string; description: string; image: string; feedbacks: string[]; thumbsUpScore: number }[]
+  >([]); // Added thumbsUpScore to each idea
 
   const data: Item[] = [
-    {
-      id: 1,
-      logo: "/Pitchwise.jpeg",
-      title: "Pitchwise",
-      description:
-        "- A platform for rating startup ideas, giving feedback, and identifying potential problems",
-    },
-    {
-      id: 2,
-      logo: "/share_img.png",
-      title: "Profiliate",
-      description:
-        "- Platform for Content creators to hire people to spread their content to masses through use of affiliate links.",
-    },
-    {
-      id: 3,
-      logo: "/home sold.jpeg",
-      title: "DoorScore",
-      description:
-        "- Ever used something like Carfax to get a value report of a car? This is going to be the same thing but with houses.",
-    },
-    {
-      id: 4,
-      logo: "/food_img.jpeg",
-      title: "ProPortion",
-      description:
-        "- Help restaurants reduce food waste by predicting the quantity of ingredients they need to buy.",
-    },
-    {
-      id: 5,
-      logo: "/focus_img.png",
-      title: "FocusFlow",
-      description:
-        "- This app is designed to optimize your productivity and streamline your routines, providing real-time updates on your progress.",
-    },
-    {
-      id: 6,
-      logo: "/Pitchwise.jpeg",
-      title: "Company F",
-      description: "Personal finance management made easy.",
-    },
-    {
-      id: 7,
-      logo: "/Pitchwise.jpeg",
-      title: "Company G",
-      description: "AI-driven marketing solutions.",
-    },
+    // Your existing data here...
   ];
 
-  // Dummy data for current user and side information
-  const currentUser = "John Doe";
-  const companyDescription =
-    "Pitchwise is a platform for rating startup ideas, giving feedback, and identifying potential problems.";
-  const currentFeedback = "Great concept, need more details.";
+  const handlePostIdeaSubmit = (idea: {
+    title: string;
+    description: string;
+    image: string;
+  }) => {
+    setIdeaList((prevIdeas) => [
+      ...prevIdeas,
+      { ...idea, feedbacks: [], thumbsUpScore: 0 }, // Initialize thumbsUpScore to 0
+    ]);
+  };
 
-  const handlePostIdeaSubmit = (idea: string) => {
-    // Handle the submitted idea (e.g., send to a server or save in state)
-    console.log("New Idea Submitted:", idea);
+  const handleThumbsUp = (index: number) => {
+    const updatedIdeas = [...ideaList];
+    // Ensure thumbsUpScore is a number and increment it
+    updatedIdeas[index].thumbsUpScore = (updatedIdeas[index].thumbsUpScore || 0) + 1;
+    setIdeaList(updatedIdeas); // Update state with new thumbs-up score
+  };
+
+  const handleFeedbackSubmit = (index: number, feedback: string) => {
+    const updatedIdeas = [...ideaList];
+    updatedIdeas[index].feedbacks.push(feedback); // Add feedback to the specific idea
+    setIdeaList(updatedIdeas);
   };
 
   return (
@@ -78,7 +49,7 @@ const Feed: React.FC = () => {
       <div className="p-4 overflow-y-scroll h-screen flex">
         <div className="flex-grow">
           <div className="grid grid-cols-1 gap-4 w-full max-w-screen-lg mx-auto">
-            {data.map((item) => (
+            {data.map((item, index) => (
               <Card
                 key={item.id}
                 item={item}
@@ -90,14 +61,49 @@ const Feed: React.FC = () => {
           {selectedCard && (
             <Modal item={selectedCard} onClose={() => setSelectedCard(null)} />
           )}
+          {/* Render submitted ideas */}
+          <div className="mt-4">
+            <h3 className="text-lg font-bold">Ideas Submitted</h3>
+            <ul className="list-disc pl-5">
+              {ideaList.map((idea, index) => (
+                <li key={index} className="mt-1">
+                  <strong>{idea.title}</strong>
+                  <p>{idea.description}</p>
+                  {idea.image && (
+                    <img src={idea.image} alt={idea.title} className="w-32 h-32 mt-1" />
+                  )}
+                  <button
+                    onClick={() => setFeedbackModalOpen(true)} // Open feedback modal for this idea
+                    className="mt-2 bg-blue-600 text-white py-1 px-2 rounded hover:bg-blue-700"
+                  >
+                    Leave Feedback
+                  </button>
+
+                  {/* Thumbs-up button */}
+                  <button
+                    onClick={() => handleThumbsUp(index)} // Increment thumbs-up score for this idea
+                    className="mt-2 bg-green-600 text-white py-1 px-2 rounded hover:bg-green-700"
+                  >
+                    👍 {idea.thumbsUpScore}
+                  </button>
+
+                  <ul className="mt-1 list-disc pl-5">
+                    {idea.feedbacks.map((feedback, feedbackIndex) => (
+                      <li key={feedbackIndex}>{feedback}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className="w-1/3 ml-4">
           <SideInfo
             companyName="Pitchwise"
-            currentUser={currentUser}
-            companyDescription={companyDescription}
-            currentFeedback={currentFeedback}
-            onPostIdea={() => setPostIdeaModalOpen(true)} // Open the modal
+            currentUser="John Doe"
+            companyDescription="Pitchwise is a platform for rating startup ideas, giving feedback, and identifying potential problems."
+            currentFeedback="Great concept, need more details."
+            onPostIdea={() => setPostIdeaModalOpen(true)}
           />
         </div>
       </div>
@@ -108,8 +114,20 @@ const Feed: React.FC = () => {
           onSubmit={handlePostIdeaSubmit}
         />
       )}
+
+      {isFeedbackModalOpen && (
+        <FeedbackModal
+          ideaTitle={ideaList[ideaList.length - 1]?.title} // Pass the last idea's title
+          onClose={() => setFeedbackModalOpen(false)}
+          onSubmit={(feedback) => {
+            handleFeedbackSubmit(ideaList.length - 1, feedback);
+            setFeedbackModalOpen(false); // Close modal after submitting feedback
+          }}
+        />
+      )}
     </div>
   );
 };
 
 export default Feed;
+
